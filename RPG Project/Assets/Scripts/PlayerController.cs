@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /* Controls the player. Here we choose our "focus" and where to move. */
 
@@ -19,9 +20,14 @@ public class PlayerController : MonoBehaviour {
 		cam = Camera.main;
 		motor = GetComponent<PlayerMotor>();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
+
+		if (EventSystem.current.IsPointerOverGameObject())
+		{
+			return;
+		}
 
 		// If we press left mouse
 		if (Input.GetMouseButtonDown(0))
@@ -70,7 +76,7 @@ public class PlayerController : MonoBehaviour {
 			focus = newFocus;	// Set our new focus
 			motor.FollowTarget(newFocus);	// Follow the new focus
 		}
-		
+
 		newFocus.OnFocused(transform);
 	}
 
